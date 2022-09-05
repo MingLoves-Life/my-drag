@@ -1,10 +1,8 @@
 <template>
   <Header />
   <main class="main">
-    <div style="width: 200px; border-right: 1px solid black; display: flex;flex-direction: column;align-items: center;">
-      <a-button style="width: 100px;">文字</a-button>
-      <a-button style="width: 100px;">按钮</a-button>
-      <a-button style="width: 100px;">图片</a-button>
+    <div class="leftAside">
+      <ComponentList />
     </div>
     <div class="draw-warp">
       <div class="draw"></div>
@@ -21,6 +19,7 @@
 <script setup>
 import { defineComponent, ref } from "vue";
 import Header from "/src/component/Header.vue";
+import ComponentList from "/src/component/ComponentList.vue";
 defineComponent({ name: "Home" });
 const activeKey = ref();
 </script>
@@ -40,5 +39,12 @@ const activeKey = ref();
   background-color: white;
   width: 500px;
   height: 500px;
+}
+.leftAside {
+  width: 200px;
+  border-right: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
