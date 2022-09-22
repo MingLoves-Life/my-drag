@@ -4,8 +4,8 @@
     <div class="leftAside">
       <ComponentList />
     </div>
-    <div class="draw-warp">
-      <div class="draw"></div>
+    <div class="draw-warp" @drop="handleDrag" @dragover="handleDragOver">
+      <Editor id="editorEl" />
     </div>
     <div style="width: 200px; border-left: 1px solid black">
       <a-tabs v-model:activeKey="activeKey" centered>
@@ -19,15 +19,42 @@
 <script setup>
 import { defineComponent, ref } from "vue";
 import Header from "/src/component/Header.vue";
+import Editor from "/src/component/Editor.vue";
 import ComponentList from "/src/component/ComponentList.vue";
+import { useComponentStore } from "/src/store/component";
+import { cloneDeep } from "lodash";
 defineComponent({ name: "Home" });
+
+const componentStore = useComponentStore();
+
 const activeKey = ref();
+
+const handleDrag = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const component = cloneDeep(
+    componentStore.componentList[e.dataTransfer.getData("index")]
+  );
+  const editorElRect = document
+    .getElementById("editorEl")
+    .getBoundingClientRect();
+  const { x, y } = e;
+  component.style.top = y - editorElRect.y + "px";
+  component.style.left = x - editorElRect.x + "px";
+  componentStore.addCanvasComponent(component);
+  console.log({ component });
+};
+const handleDragOver = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
 </script>
 <style>
 .main {
   display: flex;
   height: calc(100% - 50px);
 }
+
 .draw-warp {
   flex: 1;
   background-color: gray;
@@ -35,11 +62,11 @@ const activeKey = ref();
   align-items: center;
   justify-content: center;
 }
+
 .draw {
   background-color: white;
-  width: 500px;
-  height: 500px;
 }
+
 .leftAside {
   width: 200px;
   border-right: 1px solid black;

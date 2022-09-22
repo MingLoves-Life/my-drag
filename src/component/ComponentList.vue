@@ -1,7 +1,13 @@
 <template>
-  <a-button style="width: 100px">文字</a-button>
-  <a-button style="width: 100px">按钮</a-button>
-  <a-button style="width: 100px">图片</a-button>
+  <div
+    @dragstart="handleDragStart"
+    v-for="(component, index) in componentStore.componentList"
+    :key="component.label"
+  >
+    <a-button style="width: 100px" :draggable="true" :data-index="index">{{
+      component.label
+    }}</a-button>
+  </div>
 </template>
 <script setup>
 import { defineComponent } from "vue";
@@ -9,5 +15,8 @@ import { useComponentStore } from "/src/store/component";
 defineComponent({ name: "ComponentList" });
 
 const componentStore = useComponentStore();
-console.log({ ...componentStore });
+
+const handleDragStart = (e) => {
+  e.dataTransfer.setData("index", e.target.dataset.index);
+};
 </script>
