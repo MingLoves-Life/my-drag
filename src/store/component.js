@@ -35,12 +35,31 @@ export const useComponentStore = defineStore("component", {
     canvasComponent: [],
     curMouseDownComponent: {
       index: null,
+      top: null,
+      left: null,
+      startClientX: null,
+      startClientY: null,
+      canvasComponent: {},
     },
     clickComponentWrap: {
       index: null,
     },
     snapshot: [[]],
     snapshotIndex: 0,
+    attrList: {
+      width: "宽度",
+      height: "高度",
+    },
+    eventList: [
+      {
+        key: "redirect",
+        label: "跳转事件",
+      },
+      {
+        key: "alert",
+        label: "alert事件",
+      },
+    ],
   }),
 
   actions: {
@@ -75,6 +94,13 @@ export const useComponentStore = defineStore("component", {
       this.canvasComponent.length = 0;
       this.canvasComponent.push(...this.snapshot[this.snapshotIndex]);
       console.log("undoSnapshot", this.snapshotIndex, this.snapshot);
+    },
+    saveComponent() {
+      localStorage.setItem(
+        "canvasComponent",
+        JSON.stringify(this.canvasComponent)
+      );
+      console.log("saveComponent");
     },
   },
 });

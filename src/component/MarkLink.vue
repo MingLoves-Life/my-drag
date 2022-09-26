@@ -11,7 +11,7 @@ import { useComponentStore } from "/src/store/component";
 
 defineComponent({ name: "MarkLink" });
 const componentStore = useComponentStore();
-const diff = 3;
+const diff = 10;
 const showLine = ref(true);
 const lineInfo = reactive({ left: "0px" });
 const checkNear = () => {

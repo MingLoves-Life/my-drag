@@ -8,7 +8,7 @@
     >
     <a-button>插入图片</a-button>
     <a-button>预览</a-button>
-    <a-button>保存</a-button>
+    <a-button @click="save">保存</a-button>
     <a-button @click="componentStore.clearCanvas">清空</a-button>
     <span style="margin: 0 10px">画布大小</span>
     <a-input
@@ -40,6 +40,8 @@ const canRedo = computed(
 const canUndo = computed(
   () => componentStore.snapshot.length - 1 > componentStore.snapshotIndex
 );
+
+const save = () => componentStore.saveComponent();
 </script>
 <style lang="less">
 .header {

@@ -7,11 +7,15 @@
     <div class="draw-warp" @drop="handleDrag" @dragover="handleDragOver">
       <Editor id="editorEl" />
     </div>
-    <div style="width: 200px; border-left: 1px solid black">
+    <div style="width: 300px; border-left: 1px solid black">
       <a-tabs v-model:activeKey="activeKey" centered>
-        <a-tab-pane key="1" tab="属性">属性</a-tab-pane>
-        <a-tab-pane key="2" tab="动画">动画</a-tab-pane>
-        <a-tab-pane key="3" tab="事件">事件</a-tab-pane>
+        <a-tab-pane key="1" tab="属性">
+          <AttrList />
+        </a-tab-pane>
+        <a-tab-pane key="2" tab="事件">
+          <EventList />
+        </a-tab-pane>
+        <a-tab-pane key="3" tab="动画">动画</a-tab-pane>
       </a-tabs>
     </div>
   </main>
@@ -21,6 +25,8 @@ import { defineComponent, ref } from "vue";
 import Header from "/src/component/Header.vue";
 import Editor from "/src/component/Editor.vue";
 import ComponentList from "/src/component/ComponentList.vue";
+import AttrList from "/src/component/AttrList.vue";
+import EventList from "/src/component/EventList.vue";
 import { useComponentStore } from "/src/store/component";
 import { cloneDeep } from "lodash";
 defineComponent({ name: "Home" });
