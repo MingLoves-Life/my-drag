@@ -54,6 +54,29 @@ const handleDragOver = (e) => {
   e.preventDefault();
   e.stopPropagation();
 };
+
+const ctrlKey = 17,
+  vKey = 86,
+  cKey = 67,
+  xKey = 88;
+
+window.onkeydown = (e) => {
+  if (e.keyCode == ctrlKey) {
+    componentStore.isCtrlDown = true;
+  } else if (componentStore.isCtrlDown && e.keyCode == cKey) {
+    componentStore.copy();
+  } else if (componentStore.isCtrlDown && e.keyCode == vKey) {
+    componentStore.paste();
+  } else if (componentStore.isCtrlDown && e.keyCode == xKey) {
+    componentStore.cut();
+  }
+};
+
+window.onkeyup = (e) => {
+  if (e.keyCode == ctrlKey) {
+    componentStore.isCtrlDown = false;
+  }
+};
 </script>
 <style>
 .main {

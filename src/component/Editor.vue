@@ -32,12 +32,14 @@
     </ComponentWrap>
     <context-menu :contextMenuInfo="contextMenuInfo" />
     <mark-link ref="markLinkRef" />
+    <preview />
   </div>
 </template>
 <script setup>
 import ContextMenu from "/src/component/ContextMenu.vue";
 import ComponentWrap from "/src/component/ComponentWrap.vue";
 import MarkLink from "/src/component/MarkLink.vue";
+import Preview from "/src/component/Preview.vue";
 
 import { defineComponent } from "vue";
 

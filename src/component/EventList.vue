@@ -21,7 +21,7 @@ const eventList = computed(() => componentStore.eventList);
 const curComponentInfo = computed(() => {
   const curCanvasComponent =
     componentStore.curMouseDownComponent.canvasComponent;
-  if (!curCanvasComponent?.event) curCanvasComponent.event = [];
+  if (!curCanvasComponent?.event) curCanvasComponent.event = {};
 
   eventList.value.forEach((event) => {
     const { key } = event;

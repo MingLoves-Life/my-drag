@@ -5,8 +5,10 @@ const componentStore = useComponentStore();
 
 onMounted(() => {
   const canvasComponent = JSON.parse(localStorage.getItem("canvasComponent"));
-  componentStore.canvasComponent = [...canvasComponent];
-  console.log('localStorage',canvasComponent);
+  if (canvasComponent) {
+    componentStore.canvasComponent = [...canvasComponent];
+    console.log("localStorage", canvasComponent);
+  }
 });
 </script>
 

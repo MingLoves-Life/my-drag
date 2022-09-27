@@ -54,12 +54,19 @@ export const useComponentStore = defineStore("component", {
       {
         key: "redirect",
         label: "跳转事件",
+        event: (url) => window.open(url),
       },
       {
         key: "alert",
         label: "alert事件",
+        event: (str) => alert(str),
       },
     ],
+    previewInfo: {
+      visible: false,
+    },
+    isCtrlDown: false,
+    copyComponent: {},
   }),
 
   actions: {
@@ -102,5 +109,28 @@ export const useComponentStore = defineStore("component", {
       );
       console.log("saveComponent");
     },
+    preview(width, height) {
+      this.previewInfo.visible = true;
+      this.previewInfo.width = width;
+      this.previewInfo.height = height;
+      console.log("preview", this.previewInfo);
+    },
+    copy() {
+      const canvasComponent = { ...this.curMouseDownComponent.canvasComponent };
+      const style = { ...canvasComponent.style };
+      style.top = Number(canvasComponent.style.top.slice(0, -2)) + 10 + "px";
+      style.left = Number(canvasComponent.style.left.slice(0, -2)) + 10 + "px";
+      canvasComponent.style = style;
+      this.copyComponent = { ...canvasComponent };
+      console.log("copy", this.copyComponent);
+    },
+    paste() {
+      if (Object.keys(this.copyComponent)?.length > 0) {
+        this.canvasComponent.push(this.copyComponent);
+        this.copyComponent = {};
+        console.log("paste", this.canvasComponent);
+      }
+    },
+    cut() {},
   },
 });

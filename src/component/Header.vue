@@ -1,15 +1,11 @@
 <template>
   <div class="header">
-    <a-button :disabled="!canRedo" @click="componentStore.redoSnapshot"
-      >撤销</a-button
-    >
-    <a-button :disabled="!canUndo" @click="componentStore.undoSnapshot"
-      >重做</a-button
-    >
+    <a-button :disabled="!canRedo" @click="redo">撤销</a-button>
+    <a-button :disabled="!canUndo" @click="undo">重做</a-button>
     <a-button>插入图片</a-button>
-    <a-button>预览</a-button>
+    <a-button @click="preview">预览</a-button>
     <a-button @click="save">保存</a-button>
-    <a-button @click="componentStore.clearCanvas">清空</a-button>
+    <a-button @click="clearCanvas">清空</a-button>
     <span style="margin: 0 10px">画布大小</span>
     <a-input
       v-model:value="headerInfoStore.canvasSize.width"
@@ -42,6 +38,14 @@ const canUndo = computed(
 );
 
 const save = () => componentStore.saveComponent();
+const redo = () => componentStore.redoSnapshot();
+const undo = () => componentStore.undoSnapshot();
+const preview = () =>
+  componentStore.preview(
+    headerInfoStore.canvasSize.width,
+    headerInfoStore.canvasSize.height
+  );
+const clearCanvas = () => componentStore.clearCanvas();
 </script>
 <style lang="less">
 .header {
