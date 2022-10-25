@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { cloneDeep } from "lodash";
 
 export const useComponentStore = defineStore("component", {
   state: () => ({
@@ -126,11 +127,22 @@ export const useComponentStore = defineStore("component", {
     },
     paste() {
       if (Object.keys(this.copyComponent)?.length > 0) {
-        this.canvasComponent.push(this.copyComponent);
-        this.copyComponent = {};
+        this.canvasComponent.push(cloneDeep(this.copyComponent));
+        const newCopyComponent = cloneDeep(this.copyComponent);
+        const { style } = newCopyComponent;
+        style.top =
+          Number(this.copyComponent.style.top.slice(0, -2)) + 10 + "px";
+        style.left =
+          Number(this.copyComponent.style.left.slice(0, -2)) + 10 + "px";
+        this.copyComponent = newCopyComponent;
         console.log("paste", this.canvasComponent);
       }
     },
-    cut() {},
+    cut() {
+      const { index } = this.curMouseDownComponent;
+      this.copyComponent = { ...this.curMouseDownComponent.canvasComponent };
+      this.canvasComponent.splice(index, 1);
+      console.log("cut", this.copyComponent, this.canvasComponent);
+    },
   },
 });
