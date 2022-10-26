@@ -9,6 +9,7 @@
     <div
       v-for="(component, index) in componentStore.canvasComponent"
       :key="component.label"
+      :class="component.propValue + index"
       :index="index"
       :style="{
         ...getComponentWrapStyle(component.style),
@@ -48,6 +49,9 @@ const clickComponent = (component) => {
         }
       });
     }
+  }
+  if (component?.linkage?.eventType) {
+    component?.linkage?.event();
   }
 };
 

@@ -63,6 +63,19 @@ export const useComponentStore = defineStore("component", {
         event: (str) => alert(str),
       },
     ],
+    linkageEvent: [
+      {
+        key: "click",
+        label: "点击",
+      },
+    ],
+    linkageEventProp: [
+      {
+        key: "width",
+        label: "宽度",
+        event: (comp, width) => (comp.style.width = width + "px"),
+      },
+    ],
     previewInfo: {
       visible: false,
     },
