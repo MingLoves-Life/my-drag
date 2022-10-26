@@ -69,6 +69,7 @@ const componentStore = useComponentStore();
 
 const clickMouse = ref(false);
 const isMoveComponent = ref(false);
+const isClickSelectWrap = ref(false);
 const markLinkRef = ref();
 
 const contextMenuInfo = reactive({ top: -1000, left: 0 });
@@ -78,31 +79,49 @@ const selectDivInfo = reactive({
   showBgColor: false,
   x: 0,
   y: 0,
+  startX: 0,
+  startY: 0,
+  startClientX: 0,
+  startClientY: 0,
+  moveX: 0,
+  moveY: 0,
   width: 0,
   height: 0,
+  components: [],
 });
 
 // 鼠标点击
 const handleDrawMouseDown = (e) => {
-  console.log("handleDrawMouseDownWithoutDraw");
+  console.log("handleDrawMouseDownWithoutDraw", e.target.className);
+
+  const { clientX, clientY } = e;
+  const editorElRect = document
+    .getElementById("editorEl")
+    .getBoundingClientRect();
+
   if (e.target.className === "draw") {
     componentStore.curMouseDownComponent.index = null;
     contextMenuInfo.top = -1000;
 
-    const { clientX, clientY } = e;
-    const editorElRect = document
-      .getElementById("editorEl")
-      .getBoundingClientRect();
-
     const empty = { show: false, x: 0, y: 0, width: 0, height: 0 };
     Object.keys(empty).forEach((key) => (selectDivInfo[key] = empty[key]));
 
+    selectDivInfo.components.length = 0;
     selectDivInfo.show = true;
     selectDivInfo.x = clientX - editorElRect.x;
     selectDivInfo.y = clientY - editorElRect.y;
     selectDivInfo.showBgColor = true;
     console.log("handleDrawMouseDown", { ...selectDivInfo });
   }
+
+  if (e.target.className === "selectWrap") {
+    isClickSelectWrap.value = true;
+    selectDivInfo.startClientX = clientX;
+    selectDivInfo.startClientY = clientY;
+    selectDivInfo.startX = selectDivInfo.x;
+    selectDivInfo.startY = selectDivInfo.y;
+  }
+
   clickMouse.value = true;
 };
 
@@ -111,6 +130,16 @@ const handleDrawMouseUp = (e) => {
   if (isMoveComponent.value) {
     console.log("handleDrawMouseUpWithComponent");
     isMoveComponent.value = false;
+  } else if (isClickSelectWrap.value) {
+    selectDivInfo.components.forEach((compInfo) => {
+      const {
+        style: { top, left },
+      } = compInfo.component;
+      compInfo.startY = +slice2(top);
+      compInfo.startX = +slice2(left);
+    });
+
+    isClickSelectWrap.value = false;
   } else {
     console.log("handleDrawMouseUpWithoutComponent");
     checkSelectScope(e);
@@ -125,7 +154,9 @@ const handleDrawMouseMove = (e) => {
   const { clientX: curClientX, clientY: curClientY } = e;
   const { curMouseDownComponent } = componentStore;
   const index = curMouseDownComponent.index;
-
+  const editorElRect = document
+    .getElementById("editorEl")
+    .getBoundingClientRect();
   if (clickMouse.value && isNumber(index)) {
     // console.log("handleDrawMouseMoveForComponent");
     const curComponent = curMouseDownComponent.canvasComponent;
@@ -140,14 +171,30 @@ const handleDrawMouseMove = (e) => {
 
     isMoveComponent.value = true;
     markLinkRef.value.checkNear();
+  } else if (clickMouse.value && isClickSelectWrap.value) {
+    const { startClientX, startClientY, startX, startY } = selectDivInfo;
+
+    const moveX = curClientX - startClientX;
+    const moveY = curClientY - startClientY;
+
+    selectDivInfo.y = startY + moveY;
+    selectDivInfo.x = startX + moveX;
+
+    selectDivInfo.components.forEach((compInfo) => {
+      const { startY, startX } = compInfo;
+      const { style } = compInfo.component;
+      style.top = moveY + startY + "px";
+      style.left = moveX + startX + "px";
+    });
+
+    isMoveComponent.value = false;
+    // console.log("handleDrawMouseMoveForSelectWrap", { ...selectDivInfo });
   } else if (clickMouse.value) {
-    const editorElRect = document
-      .getElementById("editorEl")
-      .getBoundingClientRect();
     selectDivInfo.width = curClientX - selectDivInfo.x - editorElRect.x;
     selectDivInfo.height = curClientY - selectDivInfo.y - editorElRect.y;
-    // console.log("handleDrawMouseMoveForSelect", { ...selectDivInfo });
+
     isMoveComponent.value = false;
+    // console.log("handleDrawMouseMoveForSelect", { ...selectDivInfo });
   }
 };
 
@@ -198,22 +245,36 @@ const checkSelectScope = (e) => {
   };
   componentStore.canvasComponent.forEach((component) => {
     const { top, left, width, height } = { ...component.style };
-    if (
-      slice2(left) > selectDivInfo.x &&
-      +slice2(left) + +slice2(width) < clientX - editorElRect.x &&
-      slice2(top) > selectDivInfo.y &&
-      +slice2(top) + +slice2(height) < clientY - editorElRect.y
-    ) {
-      info.y =
-        info.y === undefined ? +slice2(top) : Math.min(info.y, +slice2(top));
-      info.x =
-        info.x === undefined ? +slice2(left) : Math.min(info.x, +slice2(left));
-      info.width = Math.max(info.width, +slice2(left) + +slice2(width));
-      info.height = Math.max(info.height, +slice2(top) + +slice2(height));
+    const [newTop, newLeft, newHeight, newWidth] = [
+      +slice2(top),
+      +slice2(left),
+      +slice2(height),
+      +slice2(width),
+    ];
+
+    const inX =
+      newLeft > selectDivInfo.x &&
+      newLeft + newWidth < clientX - editorElRect.x;
+    const inY =
+      newTop > selectDivInfo.y && newTop + newHeight < clientY - editorElRect.y;
+
+    if (inX && inY) {
+      info.y = info.y === undefined ? newTop : Math.min(info.y, newTop);
+      info.x = info.x === undefined ? newLeft : Math.min(info.x, newLeft);
+      info.width = Math.max(info.width, newLeft + newWidth);
+      info.height = Math.max(info.height, newTop + newHeight);
+
+      selectDivInfo.components.push({
+        startX: newLeft,
+        startY: newTop,
+        component,
+      });
     }
   });
+
   info.width = info.width - info.x;
   info.height = info.height - info.y;
+
   selectDivInfo.x = info.x;
   selectDivInfo.y = info.y;
   selectDivInfo.width = info.width;
