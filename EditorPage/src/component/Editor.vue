@@ -25,6 +25,7 @@
       <component
         :is="component.component"
         :value="component.propValue"
+        v-bind="{ ...component.attr }"
         :style="{ ...getComponentStyle(component.style) }"
         @mousedown="(e) => handleComponentMouseDown(e, index)"
       >
@@ -200,10 +201,11 @@ const handleDrawMouseMove = (e) => {
 
 // 点击物料
 const handleComponentMouseDown = (e, index) => {
-  console.log("handleComponentMouseDown");
   const { curMouseDownComponent } = componentStore;
+  console.log("handleComponentMouseDown",curMouseDownComponent);
 
   curMouseDownComponent.index = index;
+  curMouseDownComponent.component = componentStore.canvasComponent[index].component;
   curMouseDownComponent.canvasComponent = componentStore.canvasComponent[index];
   curMouseDownComponent.left = componentStore.canvasComponent[index].style.left;
   curMouseDownComponent.top = componentStore.canvasComponent[index].style.top;
@@ -290,6 +292,7 @@ const getComponentStyle = (style) => {
   });
   return data;
 };
+
 const getComponentWrapStyle = (style) => {
   const data = {};
   Object.keys(style).forEach((key) => {

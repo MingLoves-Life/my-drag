@@ -1,7 +1,7 @@
 <template>
   <template v-if="hasCurComponent">
     <template v-for="style in curComponentStyle">
-      <a-form-item v-if="attrList[style]" :label="attrList[style]" :key="style">
+      <a-form-item v-if="attrProps[style]" :label="attrProps[style]" :key="style">
         <a-input v-model:value="curComponentInfo.canvasComponent.style[style]" />
       </a-form-item>
     </template>
@@ -20,7 +20,7 @@ const curComponentInfo = computed(() => componentStore.curMouseDownComponent);
 const curComponentStyle = computed(() =>
   Object.keys(curComponentInfo.value.canvasComponent.style)
 );
-
+const curComponentConfig = computed(()=>componentStore.componentConfigList.find(i=>i.name===componentStore.curMouseDownComponent.component))
 const hasCurComponent = computed(() => isNumber(curComponentInfo.value.index));
-const attrList = computed(() => componentStore.attrList);
+const attrProps = computed(() => curComponentConfig.value.attrProps);
 </script>

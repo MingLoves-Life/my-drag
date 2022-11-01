@@ -1,6 +1,7 @@
 <script setup>
 import Home from "./view/Home.vue";
 import { useComponentStore } from "/src/store/component";
+
 const componentStore = useComponentStore();
 
 onMounted(() => {

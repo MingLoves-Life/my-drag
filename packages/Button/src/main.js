@@ -1,5 +1,4 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
-
-createApp(App).mount('#app')
+import Button from "./component/Button.vue";
+import config from "./config/props.js";
+export { Button, config };
+export default { component: Button, config };

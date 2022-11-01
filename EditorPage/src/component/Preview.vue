@@ -35,7 +35,12 @@ import { useComponentStore } from "/src/store/component";
 defineComponent({ name: "Preview" });
 const componentStore = useComponentStore();
 const previewInfo = computed(() => componentStore.previewInfo);
-const eventList = computed(() => componentStore.eventList);
+const curComponentConfig = computed(() =>
+  componentStore.componentConfigList.find(
+    (i) => i.name === componentStore.curMouseDownComponent.component
+  )
+);
+const eventList = computed(() => curComponentConfig.value.eventProps);
 
 const clickComponent = (component) => {
   if (component?.event) {

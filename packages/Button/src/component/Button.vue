@@ -1,10 +1,10 @@
 <template>
-  <a-button>{{ props.value }}</a-button>
+  <Button>{{ value }}</Button>
 </template>
 <script setup>
 import { defineComponent } from "vue";
-
-defineComponent({ name: "MyBtn" });
+import { Button } from "ant-design-vue";
+defineComponent({ name: "Button" });
 
 const props = defineProps(["value"]);
 </script>

@@ -53,9 +53,16 @@ const componentStore = useComponentStore();
 
 const linkageCompInfo = reactive({});
 
-const eventList = computed(() => componentStore.eventList);
-const linkageEvent = computed(() => componentStore.linkageEvent);
-const linkageEventProp = computed(() => componentStore.linkageEventProp);
+const curComponentConfig = computed(() =>
+  componentStore.componentConfigList.find(
+    (i) => i.name === componentStore.curMouseDownComponent.component
+  )
+);
+const eventList = computed(() => curComponentConfig.value.eventProps);
+const linkageEvent = computed(() => curComponentConfig.value.linkageEvent);
+const linkageEventProp = computed(
+  () => curComponentConfig.value.linkageEventProp
+);
 
 const curComponentInfo = computed(() => {
   const { canvasComponent: curCanvasComponent } =

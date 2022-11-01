@@ -3,16 +3,22 @@ import App from "./App.vue";
 import { createPinia } from "pinia";
 import "/src/assets/reset.css";
 import "ant-design-vue/dist/antd.css";
+import Button from "@components/button";
+import Text from "@components/text";
+import Image from "@components/image";
 
-import MyText from "/src/component/MyText.vue";
-import MyBtn from "/src/component/MyBtn.vue";
-import MyImg from "/src/component/MyImg.vue";
-
+import { useComponentStoreHooks } from "./store/component.js";
 const app = createApp(App);
-const pinia = createPinia();
-
-app.component('my-text',MyText);
-app.component('my-button',MyBtn);
-app.component('my-image',MyImg);
+export const pinia = createPinia();
 
 app.use(pinia).mount("#app");
+
+const componentStore = useComponentStoreHooks();
+
+const registerComponent = ({ component, config }) => {
+  console.log({ component, config });
+  app.component(component.__name, component);
+  componentStore.addComponent(config);
+};
+
+[Button, Text, Image].forEach((c) => registerComponent(c));

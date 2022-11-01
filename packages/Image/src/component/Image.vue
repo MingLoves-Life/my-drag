@@ -1,10 +1,10 @@
 <template>
-    <a-button>{{props.value}}</a-button>
+  <img :src="props.value" />
 </template>
 <script setup>
 import { defineComponent } from 'vue';
 
-defineComponent({ name: 'MyBtn' });
+defineComponent({ name: 'Image' });
 
 const props = defineProps(['value'])
 

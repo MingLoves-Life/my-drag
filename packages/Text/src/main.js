@@ -1,5 +1,4 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
-
-createApp(App).mount('#app')
+import Text from "./component/Text.vue";
+import config from "./config/props.js";
+export { Text, config };
+export default { component: Text, config };
