@@ -4,10 +4,11 @@ import { resolve } from 'path'
 
 export default defineConfig({
   build: {
+    // minify: false,
     lib: {
       entry: resolve(__dirname, './src/main.js'),
-      name: 'Button',
-      fileName: 'button'
+      name: 'Text',
+      fileName: 'text'
     },
     rollupOptions: {
       external: ['vue'],

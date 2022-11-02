@@ -13,6 +13,7 @@
     "@antfu/utils": "^0.6.0",
     "@components/button": "workspace:0.0.1",
     "@components/image": "workspace:0.0.1",
+    "@components/preview": "workspace:^0.0.1",
     "@components/text": "workspace:0.0.1",
     "lodash-es": "^4.17.21",
     "pinia": "^2.0.21"

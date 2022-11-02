@@ -3,36 +3,7 @@ import { cloneDeep } from "lodash-es";
 import { pinia } from "../main";
 export const useComponentStore = defineStore("component", {
   state: () => ({
-    componentList: [
-      // {
-      //   component: "my-text",
-      //   label: "文字",
-      //   propValue: "文字文字",
-      //   style: {
-      //     width: "100px",
-      //     height: "100px",
-      //   },
-      // },
-      // {
-      //   component: "my-button",
-      //   label: "按钮",
-      //   propValue: "按钮按钮",
-      //   style: {
-      //     width: "100px",
-      //     height: "100px",
-      //   },
-      // },
-      // {
-      //   component: "my-image",
-      //   label: "图片",
-      //   propValue:
-      //     "https://xesfile.xesimg.com/app/happyexplore/2022/09/06/2450410_1662451249922_happyExplpre.jpg",
-      //   style: {
-      //     width: "100px",
-      //     height: "100px",
-      //   },
-      // },
-    ],
+    componentList: [],
     componentConfigList: [],
     canvasComponent: [],
     curMouseDownComponent: {
@@ -48,35 +19,6 @@ export const useComponentStore = defineStore("component", {
     },
     snapshot: [[]],
     snapshotIndex: 0,
-    attrList: {
-      // width: "宽度",
-      // height: "高度",
-    },
-    eventList: [
-      // {
-      //   key: "redirect",
-      //   label: "跳转事件",
-      //   event: (url) => window.open(url),
-      // },
-      // {
-      //   key: "alert",
-      //   label: "alert事件",
-      //   event: (str) => alert(str),
-      // },
-    ],
-    linkageEvent: [
-      // {
-      //   key: "click",
-      //   label: "点击",
-      // },
-    ],
-    linkageEventProp: [
-      // {
-      //   key: "width",
-      //   label: "宽度",
-      //   event: (comp, width) => (comp.style.width = width + "px"),
-      // },
-    ],
     previewInfo: {
       visible: false,
     },
@@ -160,7 +102,7 @@ export const useComponentStore = defineStore("component", {
     },
     addComponent(component) {
       this.componentList.push(component.basicProps);
-      this.componentConfigList.push(component)
+      this.componentConfigList.push(component);
     },
   },
 });

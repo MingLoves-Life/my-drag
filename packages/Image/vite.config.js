@@ -6,8 +6,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, './src/main.js'),
-      name: 'Button',
-      fileName: 'button'
+      name: 'Image',
+      fileName: 'image'
     },
     rollupOptions: {
       external: ['vue'],

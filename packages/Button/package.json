@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "main": "./src/main.js",
-  "module": "./src/main.js",
+  "main": "./dist/button.umd.cjs",
+  "module": "./dist/button.js",
   "files": [
     "dist"
   ],
@@ -14,7 +14,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "ant-design-vue": "^3.2.12"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",

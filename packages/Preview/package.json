@@ -1,0 +1,23 @@
+{
+  "name": "@components/preview",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./src/main.js",
+  "module": "./src/main.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.2.0",
+    "vite": "^3.0.7"
+  }
+}
