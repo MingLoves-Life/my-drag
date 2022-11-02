@@ -29,8 +29,7 @@ defineComponent({ name: "Preview" });
 
 const props = defineProps(["components", "eventList", "importComponent"]);
 
-if (props.importComponent) props.importComponent();
-
+console.log({ ...props });
 const clickComponent = (component) => {
   console.log(component, props.eventList);
   if (component?.event) {

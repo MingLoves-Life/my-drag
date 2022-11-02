@@ -13,11 +13,12 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "@components/button": "workspace:0.0.1",
-    "@components/preview": "workspace:^0.0.1",
+  "peerDependencies": {
     "vue": "^3.2.37",
     "ant-design-vue": "^3.2.12"
+  },
+  "dependencies": {
+    "@components/preview": "workspace:^0.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",

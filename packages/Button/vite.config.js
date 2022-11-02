@@ -2,9 +2,11 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
+import { viteExternalsPlugin } from "vite-plugin-externals";
 
 export default defineConfig({
   build: {
+    minify: false,
     lib: {
       entry: resolve(__dirname, "./src/main.js"),
       name: "Button",
@@ -13,15 +15,22 @@ export default defineConfig({
     },
     rollupOptions: {
       plugins: [rollupNodePolyFill()],
-      external: ["vue"],
+      external: ["vue", "ant-design-vue"],
       output: {
         globals: {
           vue: "Vue",
+          "ant-design-vue": "antd",
         },
       },
     },
   },
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    // viteExternalsPlugin({
+    //   vue: "Vue",
+    //   "ant-design-vue": "antd",
+    // }),
+  ],
   define: {
     "process.env": {},
   },

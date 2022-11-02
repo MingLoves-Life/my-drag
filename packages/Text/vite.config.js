@@ -4,7 +4,7 @@ import { resolve } from 'path'
 
 export default defineConfig({
   build: {
-    // minify: false,
+    minify: false,
     lib: {
       entry: resolve(__dirname, './src/main.js'),
       name: 'Text',
