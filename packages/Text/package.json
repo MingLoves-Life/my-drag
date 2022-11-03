@@ -1,7 +1,7 @@
 {
   "name": "@components/text",
   "private": true,
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "main": "./dist/text.umd.cjs",
   "module": "./dist/text.js",
@@ -14,8 +14,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.37",
-    "ant-design-vue": "^3.2.12"
+    "ant-design-vue": "^3.2.12",
+    "vue": "^3.2.37"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",

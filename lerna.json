@@ -1,0 +1,9 @@
+{
+  "packages": [
+    "packages/**","EditorPage"
+  ],
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": true,
+  "version": "independent",
+  "npmClient":"pnpm"
+}

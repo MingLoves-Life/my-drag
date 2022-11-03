@@ -1,7 +1,7 @@
 {
   "name": "html",
   "private": true,
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "main": "./src/main.js",
   "module": "./src/main.js",
@@ -14,11 +14,11 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "vue": "^3.2.37",
-    "ant-design-vue": "^3.2.12"
+    "ant-design-vue": "^3.2.12",
+    "vue": "^3.2.37"
   },
   "dependencies": {
-    "@components/preview": "workspace:^0.0.1"
+    "@components/preview": "workspace:^1.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",
